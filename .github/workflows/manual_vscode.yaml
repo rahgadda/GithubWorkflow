@@ -33,4 +33,4 @@ jobs:
          USER_PASS: rahgadda
     - name: Sleep Terminal For Testing
       run: |
-        sleep 30m
+        sleep 50m
