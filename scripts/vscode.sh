@@ -18,9 +18,6 @@ chmod +x ./ngrok
 echo "### Update user: $USER password ###"
 echo -e "$USER_PASS\n$USER_PASS" | sudo passwd "$USER"
 
-echo "### Waiting for 8080 port to start  ###"
-while ! nc -z localhost 8080 </dev/null; do sleep 10; done
-
 echo "### Start ngrok proxy for 8080 port ###"
 rm -f .ngrok.log
 ./ngrok authtoken "$NGROK_TOKEN"

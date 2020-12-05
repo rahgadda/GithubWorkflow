@@ -26,7 +26,10 @@ jobs:
     - name: Run VSCode Web
       run: |    
         yarn run web &
-        cd ..
+        echo "### Waiting for 8080 port to start  ###"
+        while ! nc -z localhost 8080 </dev/null; do echo "### Waiting for 8080 port to start  ###"; sleep 10; done
+    - name: Move Directory
+      run: cd ..
     - name: Running vscode.sh
       run: ./scripts/vscode.sh    
       env:
