@@ -9,14 +9,23 @@ on:
         required: true
 jobs:
   build:
-    name: Ngrok SSh Connect
+    name: Ngrok VSCode Connect
     runs-on: ubuntu-latest
     
     steps:
     - name: Checking out code
       uses: actions/checkout@v2
     - name: Add Permissions to vscode.sh
-      run: chmod +x ./scripts/vscode.sh  
+      run: chmod +x ./scripts/vscode.sh
+    - name: Download and Compile VSCode Web
+      run: |
+        git clone https://github.com/microsoft/vscode
+        cd vscode
+        yarn install > 1.log
+        yarn run compile > 1.log
+    - name: Download and Compile VSCode Web
+      run: |    
+        yarn run web &
     - name: Running vscode.sh
       run: ./scripts/vscode.sh    
       env:

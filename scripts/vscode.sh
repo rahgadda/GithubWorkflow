@@ -18,17 +18,23 @@ chmod +x ./ngrok
 echo "### Update user: $USER password ###"
 echo -e "$USER_PASS\n$USER_PASS" | sudo passwd "$USER"
 
-echo "### Install VSCode ###"
-git clone https://github.com/microsoft/vscode
-cd vscode
-yarn install > 1.log
-yarn run compile > 1.log
-yarn run web
-
 echo "### Waiting for 8080 port to start  ###"
 while ! nc -z localhost 8080 </dev/null; do sleep 10; done
 
 echo "### Start ngrok proxy for 8080 port ###"
 rm -f .ngrok.log
 ./ngrok authtoken "$NGROK_TOKEN"
-./ngrok http 8080 --log ".ngrok.log"
+./ngrok http 8080 --log ".ngrok.log" &
+
+sleep 10
+HAS_ERRORS=$(grep "command failed" < .ngrok.log)
+
+if [[ -z "$HAS_ERRORS" ]]; then
+  echo ""
+  echo "=========================================="
+  echo "To connect: $(grep -o -E "http://(.+)" < .ngrok.log | sed "s/http:\/\//ssh $USER@/" | sed "s/:/ -p /")"
+  echo "=========================================="
+else
+  echo "$HAS_ERRORS"
+  exit 4
+fi
