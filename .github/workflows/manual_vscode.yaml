@@ -23,7 +23,7 @@ jobs:
         cd vscode
         yarn install > 1.log
         yarn run compile > 1.log
-    - name: Download and Compile VSCode Web
+    - name: Run VSCode Web
       run: |    
         yarn run web &
     - name: Running vscode.sh
