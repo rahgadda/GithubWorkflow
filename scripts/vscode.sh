@@ -21,8 +21,8 @@ echo -e "$USER_PASS\n$USER_PASS" | sudo passwd "$USER"
 echo "### Install VSCode ###"
 git clone https://github.com/microsoft/vscode
 cd vscode
-yarn install 
-yarn run compile
+yarn install > 1.log
+yarn run compile > 1.log
 yarn run web
 
 echo "### Waiting for 8080 port to start  ###"
