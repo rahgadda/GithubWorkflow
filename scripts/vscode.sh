@@ -31,7 +31,7 @@ while ! nc -z localhost 8080 </dev/null; do sleep 10; done
 echo "### Start ngrok proxy for 8080 port ###"
 rm -f .ngrok.log
 ./ngrok authtoken "$NGROK_TOKEN"
-./ngrok tcp 8080 --log ".ngrok.log" &
+./ngrok http 8080 --log ".ngrok.log" &
 
 
 sleep 10
@@ -40,7 +40,7 @@ HAS_ERRORS=$(grep "command failed" < .ngrok.log)
 if [[ -z "$HAS_ERRORS" ]]; then
   echo ""
   echo "=========================================="
-  echo "To connect: $(grep -o -E "tcp://(.+)" < .ngrok.log | sed "s/tcp:\/\//ssh $USER@/" | sed "s/:/ -p /")"
+  echo "To connect: $(grep -o -E "http://(.+)" < .ngrok.log | sed "s/http:\/\//ssh $USER@/" | sed "s/:/ -p /")"
   echo "=========================================="
 else
   echo "$HAS_ERRORS"
