@@ -26,6 +26,7 @@ jobs:
     - name: Run VSCode Web
       run: |    
         yarn run web &
+        cd ..
     - name: Running vscode.sh
       run: ./scripts/vscode.sh    
       env:
