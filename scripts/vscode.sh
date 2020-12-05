@@ -38,7 +38,10 @@ sleep 10
 HAS_ERRORS=$(grep "command failed" < .ngrok.log)
 
 if [[ -z "$HAS_ERRORS" ]]; then
-  tail -f .ngrok.log
+  echo ""
+  echo "=========================================="
+  echo "To connect: $(grep -o -E "tcp://(.+)" < .ngrok.log | sed "s/tcp:\/\//ssh $USER@/" | sed "s/:/ -p /")"
+  echo "=========================================="
 else
   echo "$HAS_ERRORS"
   exit 4
